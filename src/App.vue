@@ -9,25 +9,35 @@
           <option value="slide">Slide</option>
         </select>
         <br />
-        <button class="btn btn-primary" @click="show = !show">Show Alert</button>
+        <button class="btn btn-primary" @click="show = !show">
+          Show Alert
+        </button>
         <br />
         <br />
         <transition :name="alertAnimation">
           <div class="alert alert-info" v-if="show">This is some Info</div>
         </transition>
         <transition :name="alertAnimation" type="animation">
-          <div class="alert alert-info" v-if="show">This is some slide info</div>
+          <div class="alert alert-info" v-if="show">
+            This is some slide info
+          </div>
         </transition>
         <transition
           enter-active-class="animated bouce"
           leave-active-class="animated shake"
           mode="out-in"
         >
-          <div class="alert alert-info" v-if="show" key="info">This is some slide info</div>
-          <div class="alert alert-warning" v-else key="warn">This is some slide warn</div>
+          <div class="alert alert-info" v-if="show" key="info">
+            This is some slide info
+          </div>
+          <div class="alert alert-warning" v-else key="warn">
+            This is some slide warn
+          </div>
         </transition>
         <hr />
-        <button class="btn btn-primary" @click="load = !load">Load / remove element</button>
+        <button class="btn btn-primary" @click="load = !load">
+          Load / remove element
+        </button>
         <br />
         <br />
         <transition
@@ -41,19 +51,45 @@
           @leave-cancelled="leaveCancelled"
           :css="false"
         >
-          <div style="width: 300px; height: 100px; background-color: lightgreen" v-if="load"></div>
+          <div
+            style="width: 300px; height: 100px; background-color: lightgreen"
+            v-if="load"
+          ></div>
         </transition>
         <hr />
         <br />
         <button
           class="btn btn-primary"
-          @click="selectedComponent === 'app-success' ? selectedComponent = 'app-danger' : selectedComponent = 'app-success'"
-        >Toggle Component</button>
+          @click="
+            selectedComponent === 'app-success'
+              ? (selectedComponent = 'app-danger')
+              : (selectedComponent = 'app-success')
+          "
+        >
+          Toggle Component
+        </button>
         <br />
         <br />
         <transition name="fade" mode="out-in">
           <component :is="selectedComponent"></component>
         </transition>
+        <hr />
+        <button class="btn btn-primary" @click="addItem">Add number</button>
+        <br />
+        <br />
+        <div class="list-group">
+          <transition-group>
+            <div
+              class="list-group-item"
+              v-for="(item, index) in numbers"
+              :key="index"
+              @click="deleteItem(index)"
+              style="cursor: pointer"
+            >
+              {{ item }}
+            </div>
+          </transition-group>
+        </div>
       </div>
     </div>
   </div>
@@ -70,7 +106,8 @@ export default {
       alertAnimation: "fade",
       load: true,
       elWidth: 100,
-      selectedComponent: "app-success"
+      selectedComponent: "app-success",
+      numbers: [1, 2, 3, 4]
     };
   },
   methods: {
@@ -119,6 +156,12 @@ export default {
     },
     leaveCancelled: el => {
       console.log("leave cancelled");
+    },
+    addItem() {
+      this.numbers.push(this.numbers.length + 1);
+    },
+    deleteItem(index) {
+      this.numbers.splice(index, 1);
     }
   },
   components: {
@@ -127,7 +170,7 @@ export default {
   }
 };
 </script>
- 
+
 <style>
 .fade-enter {
   opacity: 0;
