@@ -43,6 +43,17 @@
         >
           <div style="width: 300px; height: 100px; background-color: lightgreen" v-if="load"></div>
         </transition>
+        <hr />
+        <br />
+        <button
+          class="btn btn-primary"
+          @click="selectedComponent === 'app-success' ? selectedComponent = 'app-danger' : selectedComponent = 'app-success'"
+        >Toggle Component</button>
+        <br />
+        <br />
+        <transition name="fade" mode="out-in">
+          <component :is="selectedComponent"></component>
+        </transition>
       </div>
     </div>
   </div>
@@ -58,7 +69,8 @@ export default {
       show: false,
       alertAnimation: "fade",
       load: true,
-      elWidth: 100
+      elWidth: 100,
+      selectedComponent: "app-success"
     };
   },
   methods: {
