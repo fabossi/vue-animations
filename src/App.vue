@@ -9,35 +9,25 @@
           <option value="slide">Slide</option>
         </select>
         <br />
-        <button class="btn btn-primary" @click="show = !show">
-          Show Alert
-        </button>
+        <button class="btn btn-primary" @click="show = !show">Show Alert</button>
         <br />
         <br />
         <transition :name="alertAnimation">
           <div class="alert alert-info" v-if="show">This is some Info</div>
         </transition>
         <transition :name="alertAnimation" type="animation">
-          <div class="alert alert-info" v-if="show">
-            This is some slide info
-          </div>
+          <div class="alert alert-info" v-if="show">This is some slide info</div>
         </transition>
         <transition
           enter-active-class="animated bouce"
           leave-active-class="animated shake"
           mode="out-in"
         >
-          <div class="alert alert-info" v-if="show" key="info">
-            This is some slide info
-          </div>
-          <div class="alert alert-warning" v-else key="warn">
-            This is some slide warn
-          </div>
+          <div class="alert alert-info" v-if="show" key="info">This is some slide info</div>
+          <div class="alert alert-warning" v-else key="warn">This is some slide warn</div>
         </transition>
         <hr />
-        <button class="btn btn-primary" @click="load = !load">
-          Load / remove element
-        </button>
+        <button class="btn btn-primary" @click="load = !load">Load / remove element</button>
         <br />
         <br />
         <transition
@@ -51,10 +41,7 @@
           @leave-cancelled="leaveCancelled"
           :css="false"
         >
-          <div
-            style="width: 300px; height: 100px; background-color: lightgreen"
-            v-if="load"
-          ></div>
+          <div style="width: 300px; height: 100px; background-color: lightgreen" v-if="load"></div>
         </transition>
         <hr />
         <br />
@@ -65,9 +52,7 @@
               ? (selectedComponent = 'app-danger')
               : (selectedComponent = 'app-success')
           "
-        >
-          Toggle Component
-        </button>
+        >Toggle Component</button>
         <br />
         <br />
         <transition name="fade" mode="out-in">
@@ -78,16 +63,14 @@
         <br />
         <br />
         <div class="list-group">
-          <transition-group>
+          <transition-group name="slide">
             <div
               class="list-group-item"
               v-for="(item, index) in numbers"
-              :key="index"
               @click="deleteItem(index)"
               style="cursor: pointer"
-            >
-              {{ item }}
-            </div>
+              :key="item"
+            >{{ item }}</div>
           </transition-group>
         </div>
       </div>
@@ -111,7 +94,7 @@ export default {
     };
   },
   methods: {
-    beforeEnter: el => {
+    beforeEnter(el) {
       console.log("before enter");
       this.elWidth = 100;
       el.style.width = this.elWidth + "px";
@@ -128,18 +111,18 @@ export default {
         }
       }, 20);
     },
-    afterEnter: el => {
+    afterEnter(el) {
       console.log("after enter");
     },
-    enterCancelled: el => {
+    enterCancelled(el) {
       console.log("enter cancelled");
     },
-    beforeLeave: el => {
+    beforeLeave(el) {
       console.log("before leave");
       this.elWidth = 300;
       el.style.width = this.elWidth + "px";
     },
-    leave: (el, done) => {
+    leave(el, done) {
       console.log("leave");
       let round = 1;
       const interval = setInterval(() => {
@@ -151,14 +134,16 @@ export default {
         }
       }, 20);
     },
-    afterLeave: el => {
+    afterLeave(el) {
       console.log("after leave");
     },
-    leaveCancelled: el => {
+    leaveCancelled(el) {
       console.log("leave cancelled");
     },
+
     addItem() {
-      this.numbers.push(this.numbers.length + 1);
+      const pos = Math.floor(Math.random() * this.numbers.length);
+      this.numbers.splice(pos, 0, this.numbers.length + 1);
     },
     deleteItem(index) {
       this.numbers.splice(index, 1);
@@ -171,7 +156,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .fade-enter {
   opacity: 0;
 }
@@ -202,7 +187,13 @@ export default {
 
 .slide-leave-active {
   animation: slide-out 1s ease-out forwards;
-  transition: opacity 0.3s;
+  transition: opacity 1s;
+  opacity: 0;
+  position: absolute;
+}
+
+.slide-move {
+  transition: transform 1s;
 }
 
 @keyframes slide-in {
