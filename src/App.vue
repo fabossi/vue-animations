@@ -49,6 +49,9 @@
 </template>
 
 <script>
+import DangerComponent from "./components/DangerAlert.vue";
+import SuccessComponent from "./components/SuccessAlert.vue";
+
 export default {
   data() {
     return {
@@ -105,6 +108,10 @@ export default {
     leaveCancelled: el => {
       console.log("leave cancelled");
     }
+  },
+  components: {
+    appDanger: DangerComponent,
+    appSuccess: SuccessComponent
   }
 };
 </script>
